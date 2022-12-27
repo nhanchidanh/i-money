@@ -231,23 +231,27 @@
       </div>
       <!-- End: Upload photos -->
     </template>
-    <button type="submit" class="bg-blue-600 text-white">
-      Test add Button
-    </button>
+    <div class="row mt-8">
+      <button
+        class="bg-gray-400 rounded-lg py-3 w-full text-blue-800 font-semibold"
+      >
+        Add transaction
+      </button>
+    </div>
   </form>
 </template>
 <script>
 import { ref } from "vue";
 import { useUser } from "@/composables/useUser";
 import useCollection from "@/composables/useCollection";
-import useStorage from "@/composables/useStorage"
+import useStorage from "@/composables/useStorage";
 
 export default {
   setup() {
     const isMoreDetails = ref(false);
     const { getUser } = useUser();
     const { error, addRecord } = useCollection("transactions");
-    const {url,uploadFile} = useStorage('transactions');
+    const { url, uploadFile } = useStorage("transactions");
 
     const total = ref(0);
     const category = ref("");
@@ -270,8 +274,8 @@ export default {
     }
 
     async function onSubmit() {
-      if(file.value) {
-        await uploadFile(file.value)
+      if (file.value) {
+        await uploadFile(file.value);
       }
       // console.log(url);
       const { user } = getUser();
@@ -284,7 +288,7 @@ export default {
         location: location.value,
         person: person.value,
         userId: user.value.uid,
-        thumbnail:url.value,
+        thumbnail: url.value,
       };
       await addRecord(transaction);
       console.log("created");
